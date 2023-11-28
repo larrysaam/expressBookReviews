@@ -53,32 +53,32 @@ regd_users.post("/login", (req,res) => {
 
 // Add a book review
 regd_users.put("/auth/review/:isbn", (req, res) => {
-             
-            res.send(req.body.isbn)
 
-    // const isbn = req.body.isbn
-    // let review =[]
-    // review = books[isbn].reviews
+    const isbn = req.body.isbn
+    const username = req.body.username
 
-    // if(review.length>0){
-    //     review.forEach(userreview => {
-    //         if( username === userreview.username ){
-    //             userreview = {"username": username, "review": req.reviewNote };
-    //             review = userreview
-    //             books[isbn].review = review 
-    //             res.send("review edited successfully")
-    //         }else{
-    //             userreview = {"username": username, "review": req.reviewNote };
-    //             review = userreview
-    //             books[isbn].review = review 
-    //             res.send("review submitted successfully")
-    //         }
-    //     })
+    let review =[]
+    review = books[isbn].reviews
+
+    if(review.length>0){
+        review.forEach(userreview => {
+            if( username === userreview.username ){
+                userreview = {"username": username, "review": req.reviewNote };
+                review = userreview
+                books[isbn].review = review 
+                res.send("review edited successfully")
+            }else{
+                userreview = {"username": username, "review": req.reviewNote };
+                review = userreview
+                books[isbn].review = review 
+                res.send("review submitted successfully")
+            }
+        })
         
-    // }else{
-    //     books[isbn].reviews = {"username": username, "review": req.reviewNote }
-    //     res.send("review submitted successfully")
-    // }
+    }else{
+        books[isbn].reviews = {"username": username, "review": req.reviewNote }
+        res.send("review submitted successfully")
+    }
 
 
 });
