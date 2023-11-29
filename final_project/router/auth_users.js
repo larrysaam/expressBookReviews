@@ -55,7 +55,7 @@ regd_users.post("/login", (req,res) => {
 regd_users.put("/auth/review/:isbn", (req, res) => {
 
     const isbn = req.body.isbn
-    const username = req.body.username
+    const username =  req.session.authorization['username']
 
     let review =[]
     review = books[isbn].reviews
@@ -81,6 +81,29 @@ regd_users.put("/auth/review/:isbn", (req, res) => {
     }
 
 
+});
+
+
+//  delete review based on sessions username
+regd_users.delete('/auth/review/:isbn',function (req, res) {
+    const username = req.session.authorization['username']
+    const isbn = req.body.isbn
+
+    let userreview = []
+    userreview = books[isbn].reviews
+
+    userreview.forEach((review) =>{
+        if(review.username === username){
+            review = {}
+            res.send("review deleted successfully.")
+        }else{
+            res.send("review deleted successfully..")
+        }
+    })
+
+    res.send("review deleted successfully...")
+
+    
 });
 
 
